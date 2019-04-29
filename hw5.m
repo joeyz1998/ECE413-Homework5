@@ -1,6 +1,6 @@
 % Daniel Zuerbig
 % ECE 413 Music and Engineering
-% Homework Assignment 4, Effects
+% Homework Assignment 5, MPEG Compression
 
 % This is the main run file
 
@@ -44,7 +44,7 @@ YoutL = synthesize(YL);
 
 Yout = [YoutR;YoutL];
 
-
+play(Yout, fs);
 
 
 

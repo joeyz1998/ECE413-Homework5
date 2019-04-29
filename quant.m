@@ -11,6 +11,8 @@ l = length(S);
 
 Y = analyze(S);
 synth = synthesize(Y);
+% I compare the subbands to the reconstruction from the synthesis filter
+% bank, to time align the subband block to the fft samples.
 L = size(Y,2);
 
 
@@ -26,7 +28,7 @@ cutoff = 10;
 
 [ord, Wn] = buttord(20/(fs/2),5/(fs/2),1,20);
 [b, a] = butter(ord, Wn, 'high');
-synth = filter(b, a, synth);
+synth = filter(b, a, synth); % filtering out DC componant
 
 
 for n = 1:L/12-1
@@ -47,7 +49,7 @@ for n = 1:L/12-1
     
     energy = zeros(1,32);
     for i = 0:63
-        energy(i+1) = .125*sum(abs(spectrum(8*i+1:8*i+8)).^2 );
+        energy(i+1) = .125*sum(abs(spectrum(8*i+1:8*i+8)).^2 ); % adding up the energy
     end
     energy = energy/max(energy);
     
@@ -56,7 +58,7 @@ for n = 1:L/12-1
         stem(linspace(-fs/2,fs/2,64), energy)
         hold on
         plot(f, (abs(spectrum)))
-    end
+    end % plots show the FFT of blocks, along with the energy amounts for each subband.
     
     
     Y_quant(:,n*12+1:n*12+12) = block;
